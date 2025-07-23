@@ -19,3 +19,13 @@ export const getNewReleases = async (clientCredentialToken: string): Promise<Get
     throw new Error("fail to fetch new releases");
   }
 };
+
+// export const getAlbume = async(clientCredentialToken: string): Promise<SimplifiedAlbum> => {
+//   try {
+//     const response = await axios.get();
+//     return response.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error('fail to fetch get albums');
+//   }
+// }

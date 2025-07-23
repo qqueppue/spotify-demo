@@ -28,7 +28,7 @@ const ContentBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   width: "100%",
-  padding: "8px",
+  padding: "20px",
   marginBottom: "8px",
   marginRight: "8px",
 }));
@@ -44,6 +44,7 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: "20px",
+  margin: "10px 0px",
   color: theme.palette.text.secondary,
   "&:hover": {
     color: theme.palette.text.primary,
@@ -78,7 +79,11 @@ const AppLayout: React.FC = () => {
           <Library />
         </ContentBox>
       </Sidbar>
-      <ContentBox>
+      <ContentBox
+        style={{
+          margin: "0px 8px",
+        }}
+      >
         <Navbar />
         <Outlet />
       </ContentBox>

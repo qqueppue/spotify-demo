@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
 import useGetPlaylist from "../../hooks/useGetPlaylist";
 import LoadingSpinner from "../../common/components/LoadingSpinner";
@@ -53,14 +53,20 @@ const ResponsiveTypography = styled(Typography)(({ theme }) => ({
 }));
 
 const PlaylistDetailPage: React.FC = () => {
+  const [playlistId, setPlaylistId] = useState<string | undefined>('');
   const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    setPlaylistId(id);
+  }, [id])
+  
   if (id === undefined) return <Navigate to="/" />;
+
   const {
     data: playlist,
     isLoading: isPlaylistLoading,
     error: playlistError,
   } = useGetPlaylist({ playlist_id: id });
-  console.log("ddd", playlist);
 
   const {
     data: playlistItems,
@@ -119,7 +125,7 @@ const PlaylistDetailPage: React.FC = () => {
         </Grid>
       </PlaylistHeader>
       {playlist?.tracks?.total === 0 ? (
-        <EmptyPlaylistWithSearch />
+        <EmptyPlaylistWithSearch  />
       ) : (
         <Table>
           <TableHead>

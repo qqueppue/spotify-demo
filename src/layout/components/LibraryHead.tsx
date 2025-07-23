@@ -12,6 +12,7 @@ const Head = styled("div")({
 
 const LibraryHead = () => {
   const { mutate: createPlaylist } = useCreatePlaylist();
+  
   const handleCreatePlaylist = () => {
     createPlaylist({name: '나의 플레이리스트'});
   };

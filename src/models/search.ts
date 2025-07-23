@@ -24,11 +24,30 @@ export interface SearchRequestParams {
 }
 
 export interface SearchResponse {
-    artists?: ApiResponse<Artist>;
-    albums?: ApiResponse<SimplifiedAlbum>;
-    tracks?: ApiResponse<Track>;
-    playlists?: ApiResponse<SimplifiedPlaylistObject>;
-    shows?: ApiResponse<Show>;
-    episodes?: ApiResponse<SimplifiedEpisode>;
-    audiobooks?: ApiResponse<SimplifiedAudio>;
+  artists?: ApiResponse<Artist>;
+  albums?: ApiResponse<SimplifiedAlbum>;
+  tracks?: ApiResponse<Track>;
+  playlists?: ApiResponse<SimplifiedPlaylistObject>;
+  shows?: ApiResponse<Show>;
+  episodes?: ApiResponse<SimplifiedEpisode>;
+  audiobooks?: ApiResponse<SimplifiedAudio>;
 }
+
+export interface CategoryRequestParams {
+  locale: string;   //한국 ko_KR
+  limit: number;
+  offset: number;
+}
+
+export interface CategoriesItems {
+  href: string;
+  icons: {
+    url: string;
+    height: number | null;
+    width: number | null;
+  }[];
+  id: string;
+  name: string;
+}
+
+export type CategoriesReponse = ApiResponse<CategoriesItems>;

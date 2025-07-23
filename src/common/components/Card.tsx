@@ -1,5 +1,4 @@
 import { styled, Typography } from "@mui/material";
-import React from "react";
 import PlayButton from "./PlayButton";
 const CardContainer = styled("div")(({ theme }) => ({
   minWidth: "160px",
