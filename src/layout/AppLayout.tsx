@@ -82,6 +82,8 @@ const AppLayout: React.FC = () => {
       <ContentBox
         style={{
           margin: "0px 8px",
+          overflowX: "hidden",
+          overflowY: "auto",
         }}
       >
         <Navbar />

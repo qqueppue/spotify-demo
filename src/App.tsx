@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router";
 import useExchangeToken from "./hooks/useExchangeToken";
+import SearchLayout from "./layout/components/SearchLayout";
 const AppLayout = React.lazy(() => import("./layout/AppLayout"));
 const HomePage = React.lazy(() => import("./pages/Homepage/Homepage"));
 const SearchPage = React.lazy(() => import("./pages/SearchPage/SearchPage"));
@@ -32,8 +33,10 @@ function App() {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="search" element={<SearchPage />} />
-          <Route path="search/:keyword" element={<SearchWithPage />} />
+          <Route element={<SearchLayout />}>
+            <Route path="search" element={<SearchPage />} />
+            <Route path="search/:keyword" element={<SearchWithPage />} />
+          </Route>
           <Route path="playlist/:id" element={<PlaylistDetailPage />} />
           <Route path="playlist" element={<PlaylistPage />} />
         </Route>

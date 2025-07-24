@@ -18,7 +18,7 @@ const NewReleases: React.FC = () => {
 
   return (
     <div>
-      <Typography variant="h2" paddingTop={"8px"}>
+      <Typography variant="h1" paddingTop={"8px"}>
         New Release Albums
       </Typography>
       {data && data.albums.items.length > 0 ? (

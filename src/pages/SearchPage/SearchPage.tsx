@@ -1,55 +1,32 @@
-import React, { useState } from "react";
-import { InputAdornment, styled, TextField } from "@mui/material";
-import CategoryCardList from "./components/CategoryCardList";
-import SearchIcon from "@mui/icons-material/Search";
-
-const SearchFieldContainer = styled("div")({
-  display: "inline-flex",
-  flexDirection: "column",
-  position: "relative",
-  minWidth: "0px",
-  padding: "0px",
-  margin: "0px 0px 10px",
-  border: "0px",
-  verticalAlign: "top",
-  width: "100%",
-  maxWidth: "364px",
-  height: "48px",
-});
-
-const SearchField = styled(TextField)({
-  borderRadius: "50px",
-  backgroundColor: "rgb(51, 51, 51)",
-  color: "white",
-});
+import React from "react";
+import { Grid } from "@mui/material";
+import useGetCategoriesItem from "../../hooks/useGetCategoriesItem";
+import CategoryCard from "./components/CategoryCard";
+import LoadingSpinner from "../../common/components/LoadingSpinner";
+import ErrorMessage from "../../common/components/ErrorMessage";
 
 const SearchPage: React.FC = () => {
-  const [keyword, setKeyword] = useState<string>("");
-  const handleSearchKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(event.target.value);
-  };
-
-  return (
-    <div>
-      <SearchFieldContainer>
-        <TextField
-          id="input-with-icon-textfield"
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            },
-          }}
-          value={keyword}
-          onChange={handleSearchKeyword}
-        />
-      </SearchFieldContainer>
-      {keyword.length === 0 ? <CategoryCardList /> : <div>test</div>}
-    </div>
-  );
+    const { data, error, isLoading } = useGetCategoriesItem();
+  
+    if (isLoading) {
+      return <LoadingSpinner />;
+    }
+  
+    if (error) {
+      return <ErrorMessage errorMessage={error.message} />;
+    }
+  
+    return (
+      <Grid container spacing={2}>
+        {data?.categories.items.map((item) => (
+          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={item.id}>
+            <div style={{padding: '16px 0px 0px 16px'}}>
+              <CategoryCard name={item.name} href={item.icons[0].url} />
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+    );
 };
 
 export default SearchPage;

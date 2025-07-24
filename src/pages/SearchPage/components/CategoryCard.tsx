@@ -26,22 +26,22 @@ interface CategoryInfo {
 }
 
 const CategoryCard = ({ name, href }: CategoryInfo) => {
-    const getRandomHex = () => {
-      const randomValue = Math.floor(Math.random() * 16777216); // 16진수 최댓값 (2^24 - 1)
-      const hexString = randomValue.toString(16);
-      return "#" + "0".repeat(6 - hexString.length) + hexString; // 6자리로 패딩
-    };
-    
-    const CardContainer = styled("div")({
-      position: "relative",
-      height: "100%",
-      borderRadius: "8px",
-      overflow: "hidden",
-      paddingBottom: "56.25%",
-      width: "100%",
-      backgroundColor: getRandomHex(),
-    });
-    
+  const getRandomHex = () => {
+    const randomValue = Math.floor(Math.random() * 16777216); // 16진수 최댓값 (2^24 - 1)
+    const hexString = randomValue.toString(16);
+    return "#" + "0".repeat(6 - hexString.length) + hexString; // 6자리로 패딩
+  };
+
+  const CardContainer = styled("div")({
+    position: "relative",
+    height: "100%",
+    borderRadius: "8px",
+    overflow: "hidden",
+    paddingBottom: "56.25%",
+    width: "100%",
+    backgroundColor: getRandomHex(),
+  });
+
   return (
     <CardContainer>
       <CardText>{name}</CardText>

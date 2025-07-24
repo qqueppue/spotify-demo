@@ -83,7 +83,7 @@ export const addPlaylistItem = async (params: {
   try {
     const { playlist_id, position, uris } = params;
     const response = await api.post(`/playlists/${playlist_id}/tracks`, body, {
-      params: { position: position, uris: "uris=" + uris.join(",") },
+      params: { position: position, uris: uris.join(",") },
     });
     return response.data;
   } catch (error) {

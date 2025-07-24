@@ -8,15 +8,21 @@ import {
 } from "@mui/material";
 import type { Track } from "../../../models/track";
 import useAddPlaylistItem from "../../../hooks/useAddPlaylistItem";
+import { useParams } from "react-router";
 
 interface SearchResultListProps {
   list: Track[];
 }
 
-export const SearchResultList = ({ list }: SearchResultListProps ) => {
+export const SearchResultList = ({ list }: SearchResultListProps) => {
+  const { id } = useParams<{ id: string }>();
   const { mutate: addSearchItems } = useAddPlaylistItem();
-  const handleAddItem = (id: string, uri: string) => {
-    addSearchItems({ playlist_id: id, position: 0, uris: [uri] });
+  const handleAddItem = (uri: string) => {
+    if (id) {
+        addSearchItems({ playlist_id: id, position: 0, uris: [uri] });
+    } else {
+        console.log('no id');
+    }
   };
 
   return (
@@ -47,7 +53,7 @@ export const SearchResultList = ({ list }: SearchResultListProps ) => {
               <div>{track.album?.name || "no name"}</div>
             </TableCell>
             <TableCell style={{ border: "none" }}>
-              <Button onClick={() => handleAddItem(track.id || '', track.uri)}>
+              <Button onClick={() => handleAddItem(track.uri)}>
                 ADD
               </Button>
             </TableCell>

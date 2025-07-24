@@ -54,8 +54,8 @@ export const searchCategoryList = async (
         "Content-Type": "application/json",
       },
     });
-    console.log('responsess',response.data);
     return response.data;
+    
   } catch (error) {
     console.log(error);
     throw new Error("fail to search catetories");

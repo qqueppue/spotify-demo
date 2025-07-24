@@ -6,22 +6,22 @@ import Card from "../../../common/components/Card";
 const Albumes = () => {
   const { data, error, isLoading } = useSearchItemsByKeyword({
     q: "k-pop",
-    type: [SEARCH_TYPE.Album],
+    type: [SEARCH_TYPE.Track],
   });
-  
+
   return (
     <div>
       <Typography variant="h1" paddingTop={"8px"}>
-        Albums
+        Tracks
       </Typography>
-      {data && data?.pages[0].albums?.items.length > 0 ? (
+      {data && data?.pages[0].tracks?.items.length > 0 ? (
         <Grid container spacing={2}>
-          {data.pages[0].albums?.items.slice(0,12).map((album) => (
-            <Grid size={{ xs: 6, sm: 4, md: 2 }} key={album.id}>
+          {data.pages[0].tracks?.items.map((track, index) => (
+            <Grid size={{ xs: 6, sm: 4, md: 2 }} key={track.album.id + index}>
               <Card
-                image={album.images[0].url}
-                name={album.name}
-                artistName={album.artists[0].name}
+                image={track.album.images[0].url}
+                name={track.album.name}
+                artistName={track.album.artists[0].name}
               />
             </Grid>
           ))}

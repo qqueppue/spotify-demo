@@ -1,4 +1,4 @@
-import { styled, TextField, Typography } from "@mui/material";
+import { InputAdornment, styled, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import useSearchItemsByKeyword from "../../../hooks/useSearchItemsByKeyword";
 import { SEARCH_TYPE } from "../../../models/search";
@@ -23,7 +23,7 @@ const EmptyPlaylistWithSearch = () => {
     q: keyword,
     type: [SEARCH_TYPE.Track],
   });
-  console.log("ddd", data);
+
   const handleSearchKeyword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
   };
@@ -34,9 +34,17 @@ const EmptyPlaylistWithSearch = () => {
         Let's find something for your playlist
       </Typography>
       <SearchForm>
-        {/* <SearchIcon style={{ position: "absolute" }} /> */}
         <TextField
-          style={{ width: "100%", margin: '10px 0px' }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            },
+          }}
+          style={{ width: "100%", margin: "10px 0px" }}
           value={keyword}
           onChange={handleSearchKeyword}
         />
