@@ -2,12 +2,22 @@ import { SEARCH_TYPE } from "../../../models/search";
 import useSearchItemsByKeyword from "../../../hooks/useSearchItemsByKeyword";
 import { Grid, Typography } from "@mui/material";
 import Card from "../../../common/components/Card";
+import LoadingSpinner from "../../../common/components/LoadingSpinner";
+import ErrorMessage from "../../../common/components/ErrorMessage";
 
-const Albumes = () => {
+const Tracks = () => {
   const { data, error, isLoading } = useSearchItemsByKeyword({
     q: "k-pop",
     type: [SEARCH_TYPE.Track],
   });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return <ErrorMessage errorMessage={error.message} />;
+  }
 
   return (
     <div>
@@ -20,7 +30,7 @@ const Albumes = () => {
             <Grid size={{ xs: 6, sm: 4, md: 2 }} key={track.album.id + index}>
               <Card
                 image={track.album.images[0].url}
-                name={track.album.name}
+                name={track.name}
                 artistName={track.album.artists[0].name}
               />
             </Grid>
@@ -33,4 +43,4 @@ const Albumes = () => {
   );
 };
 
-export default Albumes;
+export default Tracks;

@@ -2,13 +2,24 @@ import { SEARCH_TYPE } from "../../../models/search";
 import useSearchItemsByKeyword from "../../../hooks/useSearchItemsByKeyword";
 import { Grid, Typography } from "@mui/material";
 import Card from "../../../common/components/Card";
+import LoadingSpinner from "../../../common/components/LoadingSpinner";
+import ErrorMessage from "../../../common/components/ErrorMessage";
 
 const Albumes = () => {
   const { data, error, isLoading } = useSearchItemsByKeyword({
     q: "k-pop",
     type: [SEARCH_TYPE.Album],
   });
-  
+  console.log('Data',data);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return <ErrorMessage errorMessage={error.message} />;
+  }
+
   return (
     <div>
       <Typography variant="h1" paddingTop={"8px"}>

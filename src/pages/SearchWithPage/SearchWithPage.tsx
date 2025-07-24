@@ -7,17 +7,30 @@ import ErrorMessage from "../../common/components/ErrorMessage";
 import {
   Box,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  styled,
   Typography,
 } from "@mui/material";
 import Card from "../../common/components/Card";
 import ArtistCard from "./components/ArtistCard";
 import moment from "moment";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TopResultCard from "./components/TopResultCard";
+
+const PlayButtonContainer = styled("div")(({ theme }) => ({
+  color: theme.palette.action.hover,
+  "&:hover": {
+    color: "#ffffff",
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: "opacity 0.3s ease-in-out",
+  },
+  "&:hover .overlay": {
+    opacity: 1,
+  },
+}));
 
 const SearchWithPage: React.FC = () => {
   const { keyword } = useParams<{ keyword: string }>();
@@ -48,9 +61,6 @@ const SearchWithPage: React.FC = () => {
     q: keyword || "",
     type: [SEARCH_TYPE.Album],
   });
-  console.log("data1- ", trackData);
-  console.log("data2- ", artistData);
-  console.log("data3- ", albumData);
 
   if (trackLoading || artistLoading || albumLoading) {
     return <LoadingSpinner />;
@@ -65,7 +75,7 @@ const SearchWithPage: React.FC = () => {
     <div>
       <Box>
         <Grid container spacing={2}>
-          <Grid size={{ xs: 4, sm: 4, md: 4 }}>
+          <Grid size={{ xs: 6, sm: 6, md: 6 }}>
             <Typography variant="h1" paddingTop={"8px"}>
               Top Result
             </Typography>
@@ -75,41 +85,37 @@ const SearchWithPage: React.FC = () => {
               artistName={trackData?.pages[0].tracks?.items[0].artists[0].name}
             />
           </Grid>
-          <Grid size={{ xs: 4, sm: 4, md: 4 }}>
+          <Grid size={{ xs: 6, sm: 6, md: 6 }}>
             <Typography variant="h1" paddingTop={"8px"}>
               Songs
             </Typography>
-            <Table>
-              <TableBody>
-                {trackData?.pages[0].tracks?.items.slice(0,4).map((item) => (
-                  <TableRow>
-                    <TableCell style={{ display: "flex" }}>
-                      <img
-                        height={40}
-                        width={40}
-                        style={{ borderRadius: "4px", marginInlineEnd: "12px" }}
-                        src={item.album.images[0].url}
-                      />
-                      <div>
-                        <Typography variant="body2">
-                          {item.name || "no name"}
-                        </Typography>
-                        <Typography
-                          variant="caption"
-                          color="var(--text-subdued, #b3b3b3)"
-                        >
-                          {item.artists[0].name || "no name"}
-                        </Typography>
-                      </div>
-                    </TableCell>
-                    <TableCell><AddCircleOutlineIcon /></TableCell>
-                    <TableCell>
-                      {moment(item.duration_ms).format("mm:ss") || "Unknown"}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <List>
+              {trackData?.pages[0].tracks?.items.slice(0, 4).map((item) => (
+                <ListItem>
+                  <ListItemAvatar sx={{ flex: 1 }}>
+                    <img
+                      height={40}
+                      width={40}
+                      style={{ borderRadius: "4px", marginInlineEnd: "12px" }}
+                      src={item.album?.images[0].url}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText sx={{ flex: 5 }}
+                    primary={item.name || "no name"}
+                    secondary={item.artists[0].name || "no name"}
+                  />
+
+                  <ListItemText sx={{ flex: 1 }}>
+                    <PlayButtonContainer>
+                      <AddCircleOutlineIcon />
+                    </PlayButtonContainer>
+                  </ListItemText>
+                  <ListItemText>
+                    {moment(item.duration_ms).format("mm:ss") || "Unknown"}
+                  </ListItemText>
+                </ListItem>
+              ))}
+            </List>
           </Grid>
         </Grid>
       </Box>
@@ -121,7 +127,7 @@ const SearchWithPage: React.FC = () => {
           {artistData?.pages[0].artists?.items.slice(0, 6).map((artist) => (
             <Grid size={{ xs: 6, sm: 4, md: 2 }} key={artist.id}>
               <ArtistCard
-                image={artist.images.length > 0 ? artist.images[0].url : ''}
+                image={artist.images.length > 0 ? artist.images[0].url : ""}
                 name={artist.name}
                 type={artist.type}
               />

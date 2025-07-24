@@ -3,7 +3,7 @@ import PlayButton from "../../../common/components/PlayButton";
 const CardContainer = styled("div")(({ theme }) => ({
   minWidth: "160px",
   width: "100%",
-  height: "100%",
+  height: "auto",
   padding: "12px",
   "&:hover": {
     borderRadius: '8px',

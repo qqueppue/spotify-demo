@@ -18,10 +18,6 @@ const CardContainer = styled("div")(({ theme }) => ({
     opacity: 1,
   },
 }));
-const AlbumImageFrame = styled("div")({
-  width: "100%",
-  position: "relative",
-});
 const AlbumImage = styled("img")({
   width: "100%",
   height: "auto",
