@@ -21,7 +21,7 @@ const Tracks = () => {
 
   return (
     <div>
-      <Typography variant="h1" paddingTop={"8px"}>
+      <Typography variant="h1" paddingTop={"8px"} margin={"20px 0px"}>
         Tracks
       </Typography>
       {data && data?.pages[0].tracks?.items.length > 0 ? (
