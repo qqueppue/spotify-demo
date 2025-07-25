@@ -11,7 +11,6 @@ import {
 import moment from "moment";
 import DefaultImage from "../../../common/components/DefaultImage";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import useGetPlaylist from "../../../hooks/useGetPlaylist";
 import useGetCurrentUserProfile from "../../../hooks/useGetCurrentUserProfile";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../../../common/components/LoadingSpinner";
@@ -19,6 +18,7 @@ import ErrorMessage from "../../../common/components/ErrorMessage";
 import useGetCurrentUserPlaylists from "../../../hooks/useGetCurrentUserPlaylists";
 import { useInView } from "react-intersection-observer";
 import useAddPlaylistItem from "../../../hooks/useAddPlaylistItem";
+import MenuPlaylistItems from "./MenuPlaylistItems";
 
 interface SongListProps {
   image: string;
@@ -62,11 +62,8 @@ const AddButton = styled("button")({
 const SearchSongItem = ({ image, name, artistName, time }: SongListProps) => {
   const [snackOpen, setSnackOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [playlistID, setPlaylistId] = useState<string>('');
-  const [uri, setUri] = useState<string>('');
   const playlistOpen = Boolean(anchorEl);
 
-  const { mutate: addSearchItems } = useAddPlaylistItem();
   const { data: userProfile } = useGetCurrentUserProfile();
   const { ref, inView } = useInView();
 
@@ -120,12 +117,6 @@ const SearchSongItem = ({ image, name, artistName, time }: SongListProps) => {
     setAnchorEl(null);
   };
 
-  const handleMenuClick = (event) => {
-    console.log('event',event);
-    // addSearchItems({ playlist_id: event.target.value, playlistID, position: 0, uris: [uri] });
-    setAnchorEl(null);
-  }
-
   return (
     <SongContainer key={image + name + artistName + time}>
       <ListItemAvatar sx={{ flex: 1 }}>
@@ -166,12 +157,10 @@ const SearchSongItem = ({ image, name, artistName, time }: SongListProps) => {
             },
           }}
         >
-          {data?.pages[0].items.map((item) => (
-            <MenuItem value={item.id} onClick={handleMenuClick}>
-              {item.name}
-            </MenuItem>
+          {data?.pages.map((playlists, index) => (
+            <MenuPlaylistItems key={index} playlists={playlists.items} closeMenu={handlePlaylistClose} />
           ))}
-          <div ref={ref}>test{isFetchingNextPage && <LoadingSpinner />}</div>
+          <div ref={ref}>{isFetchingNextPage && <LoadingSpinner />}</div>
         </Menu>
         <Snackbar
           open={snackOpen}
